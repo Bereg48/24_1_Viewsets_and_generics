@@ -4,7 +4,7 @@ from main.apps import MainConfig
 from rest_framework.routers import DefaultRouter
 
 from main.views import CourseViewSet, LessonCreateAPIView, LessonListAPIView, LessonRetrieveAPIView, \
-    LessonUpdateAPIView, LessonDestroyAPIView
+    LessonUpdateAPIView, LessonDestroyAPIView, PayCreateAPIView, PayListAPIView
 
 app_name = MainConfig.name
 
@@ -17,5 +17,7 @@ urlpatterns = [
                   path('lesson/<int:pk>/', LessonRetrieveAPIView.as_view(), name='lesson-retrieve'),
                   path('lesson/update/<int:pk>/', LessonUpdateAPIView.as_view(), name='lesson-update'),
                   path('lesson/delete/<int:pk>/', LessonDestroyAPIView.as_view(), name='lesson-delete'),
+                  path('pay/', PayListAPIView.as_view(), name='pay-list'),
+                  path('pay/create/', PayCreateAPIView.as_view(), name='pay-create'),
 
               ] + router.urls
