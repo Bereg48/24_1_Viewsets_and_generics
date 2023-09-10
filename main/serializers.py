@@ -4,6 +4,8 @@ from main.models import Course, Lesson, Pay
 
 
 class LessonSerializers(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Lesson
         fields = '__all__'
@@ -17,8 +19,8 @@ class CourseSerializers(serializers.ModelSerializer):
         model = Course
         fields = '__all__'
 
-    def get_lesson_count(self, obj):
-        return obj.lesson_set.count()
+    def get_lesson_count(self, lesson):
+        return lesson.lesson_set.count()
 
 
 class PaySerializers(serializers.ModelSerializer):
