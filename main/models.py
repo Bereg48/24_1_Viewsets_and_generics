@@ -12,7 +12,7 @@ class Course(models.Model):
     description = models.TextField(**NULLABLE, verbose_name='описание')
     photo = models.ImageField(upload_to='main/', **NULLABLE, verbose_name='превью (картинка)')
     lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE, verbose_name='урок')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь', **NULLABLE)
 
     def __str__(self):
         return f'{self.name} ({self.description}), {self.photo}'
@@ -49,7 +49,7 @@ class Pay(models.Model):
     date_time = DateTimeField(auto_now=False, auto_now_add=False, verbose_name='дата оплаты')
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='оплаченный урок')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='оплаченный курс')
-    payment_amount = models.SmallIntegerField(max_length=150, verbose_name='сумма оплаты')
+    payment_amount = models.SmallIntegerField(verbose_name='сумма оплаты', null=True)
     method_pay = models.CharField(max_length=15, choices=METHOD_PAY, verbose_name='способ оплаты')
 
     def __str__(self):
@@ -58,3 +58,32 @@ class Pay(models.Model):
     class Meta:
         verbose_name = 'Платеж'
         verbose_name_plural = 'Платежи'
+
+
+class Subscription(models.Model):
+    INSTALL = 'install'
+    DELETE = 'delete'
+
+    SUBSCRIPT = [
+        (INSTALL, 'у пользователя есть подписка на курс'),
+        (DELETE, 'у пользователя отсутствует подписка на курс'),
+    ]
+
+    UPDATES_USER = 'update_user'
+    NOT_UPDAT_USER = 'not_updat_user'
+
+    UPDATES = [
+        (UPDATES_USER, 'пользователь подписан на обновления'),
+        (NOT_UPDAT_USER, 'пользователь  не подписан на обновления'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь')
+    updates = models.CharField(max_length=15, choices=UPDATES, verbose_name='признак обновление')
+    subscription = models.CharField(max_length=15, choices=SUBSCRIPT, verbose_name='признак подписки')
+
+    def __str__(self):
+        return f'{self.user} ({self.subscription})'
+
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
