@@ -8,6 +8,7 @@ nl = '\n'
 
 
 class Course(models.Model):
+    """Модель Course"""
     name = models.CharField(max_length=150, verbose_name='название')
     description = models.TextField(**NULLABLE, verbose_name='описание')
     photo = models.ImageField(upload_to='main/', **NULLABLE, verbose_name='превью (картинка)')
@@ -23,6 +24,7 @@ class Course(models.Model):
 
 
 class Lesson(models.Model):
+    """Модель Lesson"""
     name = models.CharField(max_length=150, verbose_name='название')
     description = models.TextField(**NULLABLE, verbose_name='описание')
     photo = models.ImageField(upload_to='main/', **NULLABLE, verbose_name='превью (картинка)')
@@ -38,6 +40,7 @@ class Lesson(models.Model):
 
 
 class Pay(models.Model):
+    """Модель Pay"""
     TRANSFER = 'transfer'
     CASH = 'cash'
     METHOD_PAY = [
@@ -51,6 +54,8 @@ class Pay(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='оплаченный курс')
     payment_amount = models.SmallIntegerField(verbose_name='сумма оплаты', null=True)
     method_pay = models.CharField(max_length=15, choices=METHOD_PAY, verbose_name='способ оплаты')
+    is_paid = models.BooleanField(default=False, verbose_name="статус оплаты")
+    session = models.CharField(max_length=250, verbose_name='сессия оплаты', **NULLABLE)
 
     def __str__(self):
         return f'{self.user} ({self.date_time}), {self.payment_amount}'
@@ -61,6 +66,7 @@ class Pay(models.Model):
 
 
 class Subscription(models.Model):
+    """Модель Subscription"""
     INSTALL = 'install'
     DELETE = 'delete'
 

@@ -35,7 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'corsheaders',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'rest_framework_simplejwt',
     'django_filters',
     'rest_framework',
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -144,3 +147,19 @@ AUTH_USER_MODEL = 'users.User'
 
 SUPERUSER_EMAIL = os.getenv('SUPERUSER_EMAIL', 'andreyanovi@yandex.ru')
 SUPERUSER_PASSWORD = os.getenv('SUPERUSER_PASSWORD', '454125')
+
+CORS_ALLOWED_ORIGINS = [
+    "https://read-only.example.com",
+    "https://read-and-write.example.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://read-and-write.example.com",
+]
+CORS_ALLOW_ALL_ORIGINS = False
+
+import stripe
+
+STRIPE_SECRET_KEY = 'sk_test_51NqiodFPVSrTJ6vHFbMvuoRHU742u68SrkUPavu1NPM6GsBW4iB331kQL14y5a664fmhc5kydSjcfNhqxGEYzzgt00cQock3Q9'
+
+

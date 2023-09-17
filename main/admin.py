@@ -5,6 +5,7 @@ from main.models import Course, Lesson, Pay, Subscription
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
+    """Класс CourseAdmin для отображения, фильтрации и поиска модели Course"""
     list_display = ('name', 'description', 'photo', 'lesson', 'user')
     list_filter = ('user',)
     search_fields = ('name',)
@@ -12,14 +13,17 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
+    """Класс LessonAdmin для отображения модели Lesson"""
     list_display = ('name', 'description', 'photo', 'link_video', 'user')
 
 
 @admin.register(Pay)
 class PayAdmin(admin.ModelAdmin):
+    """Класс PayAdmin для отображения модели Pay"""
     list_display = ('user', 'date_time', 'lesson', 'course', 'payment_amount', 'method_pay')
 
 
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
+    """Класс SubscriptionAdmin для отображения модели Subscription"""
     list_display = ('user', 'updates', 'subscription')

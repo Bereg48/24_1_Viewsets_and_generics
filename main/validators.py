@@ -4,6 +4,8 @@ from rest_framework.serializers import ValidationError
 
 
 # class DescriptionCourseValidator:
+"""Класс DescriptionCourseValidator валидирует данные получаемые в соответсвии с заданной моделью класса Course, 
+    данный класс водирирует в соответсвубщем сериализаторе поле description"""
 #
 #     def __init__(self, field):
 #         self.field = field
@@ -16,6 +18,8 @@ from rest_framework.serializers import ValidationError
 
 
 class DescriptionLessonValidator:
+    """Класс DescriptionLessonValidator валидирует данные получаемые в соответсвии с заданной моделью класса Lesson,
+    данный класс водирирует в соответсвубщем сериализаторе поле link_video"""
     def __init__(self, field):
         self.field = field
 
