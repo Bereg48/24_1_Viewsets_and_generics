@@ -15,8 +15,8 @@ from main.services import get_session, retrieve_session
 class CourseViewSet(viewsets.ModelViewSet):
     """ViewSet класса Course"""
     serializer_class = CourseSerializers
-    queryset = Course.objects.all()
-    permission_classes = IsAuthenticated
+    queryset = Course.objects.all().order_by('id')
+    permission_classes = (IsAuthenticated,)
     pagination_class = MainPaginator
 
 
@@ -36,9 +36,11 @@ class LessonListAPIView(generics.ListAPIView):
     """Класс LessonListAPIView отвечает за функциональность просмотра урока при применении
     класса LessonSerializers, который функционирует в соответствии с определенной моделью класса Lesson"""
     serializer_class = LessonSerializers
-    queryset = Lesson.objects.all()
-    permission_classes = [IsAuthenticated, IsModerator | IsOwner]
+    queryset = Lesson.objects.all().order_by('id')
+    permission_classes = [IsAuthenticated]
     pagination_class = MainPaginator
+    ordering_fields = ["name", "description"]
+    ordering = ["name"]
 
 
 class LessonRetrieveAPIView(generics.RetrieveAPIView):

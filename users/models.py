@@ -12,6 +12,7 @@ class UserRoles(models.TextChoices):
 
 
 class User(AbstractUser):
+    email = models.EmailField(unique=True, verbose_name='почта')
     phone = models.CharField(max_length=35, verbose_name='Номер телефона', **NULLABLE)
     country = models.CharField(max_length=35, verbose_name='Город', **NULLABLE)
     avatar = models.ImageField(upload_to='users/', verbose_name='аватар', **NULLABLE)

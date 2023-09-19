@@ -12,7 +12,7 @@ class Course(models.Model):
     name = models.CharField(max_length=150, verbose_name='название')
     description = models.TextField(**NULLABLE, verbose_name='описание')
     photo = models.ImageField(upload_to='main/', **NULLABLE, verbose_name='превью (картинка)')
-    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE, verbose_name='урок')
+    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE, verbose_name='урок', related_name="course_set")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь', **NULLABLE)
 
     def __str__(self):
@@ -27,6 +27,7 @@ class Lesson(models.Model):
     """Модель Lesson"""
     name = models.CharField(max_length=150, verbose_name='название')
     description = models.TextField(**NULLABLE, verbose_name='описание')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='курс', **NULLABLE, related_name="lesson_set")
     photo = models.ImageField(upload_to='main/', **NULLABLE, verbose_name='превью (картинка)')
     link_video = models.CharField(max_length=150, verbose_name='ссылка на видео')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь')
@@ -86,6 +87,8 @@ class Subscription(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь')
     updates = models.CharField(max_length=15, choices=UPDATES, verbose_name='признак обновление')
     subscription = models.CharField(max_length=15, choices=SUBSCRIPT, verbose_name='признак подписки')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='курс')
+
 
     def __str__(self):
         return f'{self.user} ({self.subscription})'
